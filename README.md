@@ -1,6 +1,6 @@
 # CineTrack
 
-CineTrack is a movie and TV show tracking app I built as part of my CIS 4004 term project. The idea is pretty simple — you log in, browse a catalog of shows, add things to your watchlist, and leave reviews. There's also an admin side that lets you manage all the content.
+CineTrack is a movie and TV show tracking app I built as part of my CIS 4004 term project. The idea is pretty simple you log in, browse a catalog of shows, add things to your watchlist, and leave reviews. There's also an admin side that lets you manage all the content.
 
 The frontend is built with React. Right now it runs on mock data so you don't need a backend to get it going locally.
 

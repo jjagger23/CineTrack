@@ -53,3 +53,46 @@ Any username and password combination that isn't the admin account will log you 
 ## Notes
 
 This is the frontend-only version — all the data is hardcoded in `src/data/mockData.js`. If you want to change the shows, users, or reviews that's the file to edit. The full MERN backend is being handled separately. 
+
+---
+
+## Running the Backend
+
+Need to have MongoDB running - Connection string: (mongodb://127.0.0.1:27017/)
+
+1. Open a terminal and navigate to the `server` folder:
+```
+cd server
+```
+```
+npm install
+```
+
+4. Start the server:
+```
+node server.js
+```
+
+It runs on **http://localhost:5000**
+
+---
+
+## MongoDB Collection
+
+- `users` — stores user accounts and roles
+- `shows` — stores the show/movie catalog
+- `genres` — stores genre categories
+- `watchlists` — stores each user's watchlist entries
+- `reviews` — stores user reviews and ratings
+
+---
+
+## API Routes
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET/POST/PUT/DELETE | `/api/users` | Manage users |
+| GET/POST/PUT/DELETE | `/api/shows` | Manage shows |
+| GET/POST/PUT/DELETE | `/api/genres` | Manage genres |
+| GET/POST/PUT/DELETE | `/api/watchlist` | Manage watchlist |
+| GET/POST/PUT/DELETE | `/api/reviews` | Manage reviews |

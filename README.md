@@ -6,6 +6,11 @@ Built with the MERN stack — MongoDB, Express, React, Node.js.
 
 ---
 
+## initial setup
+first change remove the .example portion from the .env.example files
+
+then add a 256 random JWT secret key as the key in the .env for the server. You can use any JWT generator from the internet or your own tools.
+
 ## Running the Frontend
 
 You'll need Node.js installed. Grab it at nodejs.org (download the LTS version).
@@ -28,7 +33,7 @@ Opens at **http://localhost:3000** in your browser.
 
 ## Running the Backend
 
-Need to have MongoDB running — Connection string: `mongodb://127.0.0.1:27017/`
+Need to have MongoDB running — Connection string: `mongodb://127.0.0.1:27017/` or whatever you have it configured as in the .env
 
 1. Open a terminal and navigate to the `server` folder:
 
@@ -48,7 +53,7 @@ npm install
 node server.js
 ```
 
-Runs on **http://localhost:5000**
+Runs on **http://localhost:5000** by default unless you change it.
 
 ---
 
@@ -97,4 +102,4 @@ Runs on **http://localhost:5000**
 
 ## Notes
 
-The frontend currently runs on mock data in `src/data/mockData.js` until the backend is fully connected. Once the API is hooked up, swap the mock data imports in each page with real axios calls — the data shapes already match.
+The frontend currently runs on mock data in `src/data/mockData.js` until the backend is fully connected. Once the API is hooked up, swap the mock data imports in each page with real axios calls — the data shapes already match. **this is in progress**

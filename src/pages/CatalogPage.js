@@ -1,36 +1,67 @@
-import { useState, useMemo } from 'react';
-import { MOCK_SHOWS, MOCK_REVIEWS, MOCK_WATCHLIST, GENRES } from '../data/mockData';
+import { useState, useMemo, useEffect } from 'react';
+import { useAuth } from '../context/AuthContext';
+import { GENRES } from '../data/mockData';
+
+const API = process.env.REACT_APP_API_URL;
 
 const TypeBadge = ({ type }) => <span className={type==='Movie'?'badge-film':'badge-series'}>{type==='Movie'?'FILM':'SERIES'}</span>;
 
 export default function CatalogPage() {
+  const { user } = useAuth();
+  const [shows, setShows] = useState([]);
   const [search,   setSearch]   = useState('');
   const [genre,    setGenre]    = useState('');
   const [type,     setType]     = useState('');
   const [selected, setSelected] = useState(null);
   const [view,     setView]     = useState('category');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const filtered = useMemo(() => MOCK_SHOWS.filter(s => {
+  useEffect(() => {
+    let active = true;
+
+    const loadShows = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        const res = await fetch(`${API}/shows`);
+        if (!res.ok) throw new Error('Failed to load shows');
+        const data = await res.json();
+        if (active) setShows(Array.isArray(data) ? data : []);
+      } catch (err) {
+        if (active) setError(err.message || 'Failed to load shows');
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+
+    loadShows();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const filtered = useMemo(() => shows.filter(s => {
     const ms = !search || s.title.toLowerCase().includes(search.toLowerCase());
     const mg = !genre  || s.genre.includes(genre);
     const mt = !type   || s.type === type;
     return ms && mg && mt;
-  }), [search, genre, type]);
+  }), [shows, search, genre, type]);
 
   const byGenre = useMemo(() => {
     const groups = {};
-    GENRES.forEach(g => { const shows = filtered.filter(s => s.genre.includes(g)); if (shows.length) groups[g] = shows; });
+    GENRES.forEach(g => { const groupedShows = filtered.filter(s => s.genre.includes(g)); if (groupedShows.length) groups[g] = groupedShows; });
     return groups;
   }, [filtered]);
 
   const isFiltering = search || genre || type;
-  const featured = MOCK_SHOWS[4]; // Oppenheimer as featured
+  const featured = shows[4] || shows[0] || null;
 
   return (
     <div className="page-enter" style={{ maxWidth:1100, margin:'0 auto', padding:'32px 28px 60px' }}>
 
       {/* Hero banner — only shown when not filtering */}
-      {!isFiltering && (
+      {!isFiltering && featured && (
         <div style={{ position:'relative', height:380, borderRadius:18, overflow:'hidden', marginBottom:44, background:'var(--surface2)' }}>
           <img src={featured.posterUrl} alt={featured.title} style={{ position:'absolute', inset:0, width:'100%', height:'100%', objectFit:'cover', objectPosition:'center 20%', filter:'brightness(0.35)' }} />
           <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right, rgba(11,11,20,0.98) 0%, rgba(11,11,20,0.6) 55%, transparent 100%)' }} />
@@ -45,7 +76,7 @@ export default function CatalogPage() {
             <p style={{ color:'rgba(255,255,255,0.6)', fontSize:14, maxWidth:500, lineHeight:1.65, marginBottom:22 }}>{featured.description}</p>
             <div style={{ display:'flex', gap:12, alignItems:'center' }}>
               <button className="btn-primary" onClick={() => setSelected(featured)} style={{ padding:'11px 26px', fontSize:14 }}>▶ View Details</button>
-              <span style={{ background:'rgba(255,216,77,0.12)', border:'1px solid rgba(255,216,77,0.25)', color:'var(--yellow)', fontSize:13, fontWeight:700, padding:'4px 10px', borderRadius:6 }}>★ {featured.rating}</span>
+              {featured.rating && <span style={{ background:'rgba(255,216,77,0.12)', border:'1px solid rgba(255,216,77,0.25)', color:'var(--yellow)', fontSize:13, fontWeight:700, padding:'4px 10px', borderRadius:6 }}>★ {featured.rating}</span>}
               <span style={{ color:'rgba(255,255,255,0.35)', fontSize:13 }}>{featured.releaseYear}</span>
             </div>
           </div>
@@ -87,7 +118,11 @@ export default function CatalogPage() {
       </div>
 
       {/* Results */}
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div style={{ textAlign:'center', padding:'60px 0', color:'var(--text-muted)' }}>Loading shows...</div>
+      ) : error ? (
+        <div style={{ textAlign:'center', padding:'60px 0', color:'var(--red)' }}>{error}</div>
+      ) : filtered.length === 0 ? (
         <div style={{ textAlign:'center', padding:'80px 0', color:'var(--text-muted)' }}>
           <div style={{ fontSize:44, marginBottom:14 }}>🔍</div>
           <p>No titles found.</p>
@@ -98,22 +133,22 @@ export default function CatalogPage() {
         </div>
       ) : (
         <div className="stagger" style={{ display:'flex', flexDirection:'column', gap:44 }}>
-          {Object.entries(byGenre).map(([g, shows]) => (
+          {Object.entries(byGenre).map(([g, groupedShows]) => (
             <div key={g}>
               <div className="section-divider">
                 <h2>{g}</h2>
-                <span className="count">{shows.length}</span>
+                <span className="count">{groupedShows.length}</span>
                 <div className="line" />
               </div>
               <div style={{ background:'var(--surface-solid)', border:'1px solid var(--border)', borderRadius:12, overflow:'hidden', boxShadow:'0 8px 24px rgba(0,0,0,0.15)' }}>
-                {shows.map((show, i) => <ShowRow key={show._id} show={show} index={i} total={shows.length} onClick={() => setSelected(show)} />)}
+                {groupedShows.map((show, i) => <ShowRow key={show._id} show={show} index={i} total={groupedShows.length} onClick={() => setSelected(show)} />)}
               </div>
             </div>
           ))}
         </div>
       )}
 
-      {selected && <ShowDetailModal show={selected} onClose={() => setSelected(null)} />}
+      {selected && <ShowDetailModal show={selected} onClose={() => setSelected(null)} user={user} />}
     </div>
   );
 }
@@ -143,21 +178,112 @@ function ShowRow({ show, index, total, onClick }) {
   );
 }
 
-function ShowDetailModal({ show, onClose }) {
+function ShowDetailModal({ show, onClose, user }) {
   const [newRating, setNewRating] = useState(7);
   const [newText, setNewText] = useState('');
-  const [reviews, setReviews] = useState(MOCK_REVIEWS[show._id] || []);
-  const [onWatchlist, setOnWatchlist] = useState(MOCK_WATCHLIST.some(w => w.show._id === show._id));
+  const [reviews, setReviews] = useState([]);
+  const [onWatchlist, setOnWatchlist] = useState(false);
   const [toast, setToast] = useState('');
 
+  useEffect(() => {
+    let active = true;
+
+    const loadData = async () => {
+      try {
+        const reviewRes = await fetch(`${API}/reviews/show/${show._id}`);
+        if (reviewRes.ok) {
+          const reviewData = await reviewRes.json();
+          if (active) {
+            setReviews((Array.isArray(reviewData) ? reviewData : []).map(r => ({
+              _id: r._id,
+              username: r.userId?.username || 'user',
+              rating: r.rating,
+              reviewText: r.reviewText,
+            })));
+          }
+        }
+
+        if (user?._id) {
+          const watchlistRes = await fetch(`${API}/watchlist/user/${user._id}`);
+          if (watchlistRes.ok) {
+            const watchlistData = await watchlistRes.json();
+            const exists = (Array.isArray(watchlistData) ? watchlistData : []).some(w => {
+              const id = typeof w.showId === 'object' ? w.showId?._id : w.showId;
+              return id === show._id;
+            });
+            if (active) setOnWatchlist(exists);
+          }
+        }
+      } catch {
+        if (active) setReviews([]);
+      }
+    };
+
+    loadData();
+    return () => {
+      active = false;
+    };
+  }, [show._id, user?._id]);
+
   const showToast = msg => { setToast(msg); setTimeout(() => setToast(''), 2500); };
-  const handleAdd = () => { if (onWatchlist) return showToast('Already on your watchlist!'); setOnWatchlist(true); showToast('Added to watchlist ✓'); };
-  const handleReview = e => {
-    e.preventDefault();
-    setReviews(prev => [{ _id:Date.now().toString(), username:'you', rating:newRating, reviewText:newText }, ...prev]);
-    setNewText(''); showToast('Review posted ✓');
+
+  const handleAdd = async () => {
+    if (!user?._id) {
+      showToast('Sign in to add to watchlist');
+      return;
+    }
+    if (onWatchlist) {
+      showToast('Already on your watchlist!');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API}/watchlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user._id, showId: show._id, status: 'Plan to Watch', progress: 0 }),
+      });
+      if (!res.ok) throw new Error('Failed to add to watchlist');
+      setOnWatchlist(true);
+      showToast('Added to watchlist ✓');
+    } catch {
+      showToast('Could not update watchlist');
+    }
   };
-  const avgRating = reviews.length > 0 ? (reviews.reduce((a,r) => a+r.rating, 0)/reviews.length).toFixed(1) : show.rating;
+
+  const handleReview = async e => {
+    e.preventDefault();
+
+    if (!user?._id) {
+      showToast('Sign in to post a review');
+      return;
+    }
+
+    if (!newText.trim()) {
+      showToast('Write a quick review first');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API}/reviews`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user._id, showId: show._id, rating: newRating, reviewText: newText.trim() }),
+      });
+
+      if (!res.ok) throw new Error('Failed to post review');
+
+      const created = await res.json();
+      setReviews(prev => [{ _id: created._id, username: user.username, rating: created.rating, reviewText: created.reviewText }, ...prev]);
+      setNewText('');
+      showToast('Review posted ✓');
+    } catch {
+      showToast('Could not post review');
+    }
+  };
+
+  const avgValue = reviews.length > 0 ? (reviews.reduce((a,r) => a+r.rating, 0)/reviews.length).toFixed(1) : (show.rating || null);
+  const avgRating = avgValue || 'N/A';
 
   return (
     <div className="modal-overlay" onClick={onClose}>

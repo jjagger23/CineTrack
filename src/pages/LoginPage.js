@@ -10,13 +10,21 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = e => {
-    e.preventDefault(); setError(''); setLoading(true);
-    setTimeout(() => {
-      try { login(username, password); navigate('/catalog'); }
-      catch (err) { setError(err.message); setLoading(false); }
-    }, 400);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
+
+    try {
+      await login(username, password);
+      navigate("/catalog");
+    } catch (err) {
+      setError(err.message || "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <div style={{ minHeight:'100vh', display:'flex', overflow:'hidden', position:'relative' }}>

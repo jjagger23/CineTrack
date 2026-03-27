@@ -9,11 +9,23 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSubmit = e => {
-    e.preventDefault(); setError('');
-    try { register(username, password); navigate('/catalog'); }
-    catch (err) { setError(err.message); }
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      await register(username, password);
+      navigate("/catalog");
+    } catch (err) {
+      setError(err.message || "Register failed");
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <div style={{ minHeight:'100vh', display:'flex', alignItems:'center', justifyContent:'center', padding:20 }}>

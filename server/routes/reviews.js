@@ -5,7 +5,7 @@ const Review = require("../models/Review");
 // GET all reviews
 router.get("/", async (req, res) => {
   try {
-    const reviews = await Review.find();
+    const reviews = await Review.find().populate("userId", "username");
     res.json(reviews);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 // GET all reviews for a specific show
 router.get("/show/:showId", async (req, res) => {
   try {
-    const reviews = await Review.find({ show_id: req.params.showId });
+    const reviews = await Review.find({ showId: req.params.showId }).populate("userId", "username");
     res.json(reviews);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -25,7 +25,7 @@ router.get("/show/:showId", async (req, res) => {
 // GET all reviews by a specific user
 router.get("/user/:userId", async (req, res) => {
   try {
-    const reviews = await Review.find({ User_id: req.params.userId });
+    const reviews = await Review.find({ userId: req.params.userId }).populate("userId", "username");
     res.json(reviews);
   } catch (err) {
     res.status(500).json({ message: err.message });

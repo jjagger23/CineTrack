@@ -5,7 +5,7 @@ const WatchList = require("../models/Watchlist");
 // GET all watchlist entries
 router.get("/", async (req, res) => {
   try {
-    const entries = await WatchList.find();
+    const entries = await WatchList.find().populate("showId");
     res.json(entries);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 // GET all watchlist entries for a specific user
 router.get("/user/:userId", async (req, res) => {
   try {
-    const entries = await WatchList.find({ User_id: req.params.userId });
+    const entries = await WatchList.find({ userId: req.params.userId }).populate("showId");
     res.json(entries);
   } catch (err) {
     res.status(500).json({ message: err.message });

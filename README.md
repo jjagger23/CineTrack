@@ -102,4 +102,4 @@ Runs on **http://localhost:5000** by default unless you change it.
 
 ## Notes
 
-The frontend currently runs on mock data in `src/data/mockData.js` until the backend is fully connected. Once the API is hooked up, swap the mock data imports in each page with real axios calls — the data shapes already match. **this is in progress**
+Currently no known issues.

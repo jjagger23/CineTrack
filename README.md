@@ -37,6 +37,7 @@ The application opens at **http://localhost:3000** in your browser.
 
 ## Running the Backend
 
+Have MongoDB Community Server installed at https://www.mongodb.com/try/download/community.
 Ensure MongoDB is running with connection string: `mongodb://127.0.0.1:27017/` or whatever you have it configured as in the .env.
 
 Open terminal and navigate to the `server` folder:
@@ -57,7 +58,7 @@ Start the server:
 node server.js
 ```
 
-Runs on **http://localhost:5000** by default unless you changed. The result should be "CineTrack API running".
+Runs on **http://localhost:5000** by default unless changed. The result should be "CineTrack API running".
 
 ---
 

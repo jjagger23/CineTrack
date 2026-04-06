@@ -1,6 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { apiRequest } from '../api/client';
+import ShowRow from '../components/catalog/ShowRow';
+import ShowDetailModal from '../components/catalog/ShowDetailModal';
 
 const TypeBadge = ({ type }) => <span className={type === 'Movie' ? 'badge-film' : 'badge-series'}>{type === 'Movie' ? 'FILM' : 'SERIES'}</span>;
 
@@ -131,11 +133,11 @@ export default function CatalogPage() {
   return (
     <div className="page-enter" style={{ maxWidth: 1100, margin: '0 auto', padding: '32px 28px 60px' }}>
       {!isFiltering && featured && (
-        <div style={{ position: 'relative', height: 380, borderRadius: 18, overflow: 'hidden', marginBottom: 44, background: 'var(--surface2)' }}>
+        <div style={{ position: 'relative', minHeight: 380, borderRadius: 18, overflow: 'hidden', marginBottom: 44, background: 'var(--surface2)' }}>
           <img src={featured.posterUrl} alt={featured.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', filter: 'brightness(0.35)' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(11,11,20,0.98) 0%, rgba(11,11,20,0.6) 55%, transparent 100%)' }} />
           <div style={{ position: 'absolute', inset: 0, backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")", pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', inset: 0, padding: '48px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+          <div style={{ position: 'relative', zIndex: 1, minHeight: 380, padding: '48px 52px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
             <div style={{ display: 'flex', gap: 8, marginBottom: 12, alignItems: 'center' }}>
               <span style={{ background: 'var(--grad)', color: '#fff', fontSize: 10, fontWeight: 800, letterSpacing: 1, padding: '3px 10px', borderRadius: 5 }}>FEATURED</span>
               <TypeBadge type={featured.type} />
@@ -226,211 +228,6 @@ export default function CatalogPage() {
           onWatchlistRemove={handleWatchlistRemove}
         />
       )}
-    </div>
-  );
-}
-
-function ShowRow({ show, index, total, onClick }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <div className="show-row" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onClick={onClick} style={{ borderBottom: index < total - 1 ? '1px solid var(--border2)' : 'none' }}>
-      <div style={{ width: 26, flexShrink: 0, textAlign: 'right', fontSize: 11, color: 'var(--text-dim)', fontWeight: 700, paddingTop: 3 }}>{String(index + 1).padStart(2, '0')}</div>
-      <div style={{ width: 50, height: 70, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: 'var(--surface2)' }}>
-        {show.posterUrl && <img src={show.posterUrl} alt={show.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
-      </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 5, flexWrap: 'wrap' }}>
-          <span className="show-title" style={{ fontWeight: 700, fontSize: 14, color: hovered ? 'var(--blue-bright)' : 'var(--text)' }}>{show.title}</span>
-          <TypeBadge type={show.type} />
-          <span style={{ fontSize: 11, color: 'var(--text-dim)' }}>{show.releaseYear}</span>
-        </div>
-        <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.55, margin: '0 0 8px', overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{show.description}</p>
-        <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-          {(show.genre || []).map(item => <span key={item} style={{ fontSize: 10, color: 'var(--text-dim)', background: 'var(--surface3)', border: '1px solid var(--border)', padding: '1px 7px', borderRadius: 4, fontWeight: 600 }}>{item}</span>)}
-        </div>
-      </div>
-      {show.rating && <div className="rating-box"><div className="val">{show.rating}</div><div className="denom">/ 10</div><div style={{ fontSize: 10, marginTop: 3 }}>*</div></div>}
-    </div>
-  );
-}
-
-function ShowDetailModal({ show, onClose, user, watchlistEntry, onWatchlistChange, onWatchlistRemove }) {
-  const [newRating, setNewRating] = useState(7);
-  const [newText, setNewText] = useState('');
-  const [reviews, setReviews] = useState([]);
-  const [toast, setToast] = useState('');
-  const [isSavingWatchlist, setIsSavingWatchlist] = useState(false);
-  const [isPostingReview, setIsPostingReview] = useState(false);
-
-  useEffect(() => {
-    let active = true;
-
-    const loadReviews = async () => {
-      try {
-        const reviewData = await apiRequest(`/reviews/show/${show._id}`);
-        if (!active) return;
-        setReviews((Array.isArray(reviewData) ? reviewData : []).map(review => ({
-          _id: review._id,
-          username: review.userId?.username || 'user',
-          rating: review.rating,
-          reviewText: review.reviewText,
-        })));
-      } catch {
-        if (active) setReviews([]);
-      }
-    };
-
-    loadReviews();
-    return () => {
-      active = false;
-    };
-  }, [show._id]);
-
-  const showToast = message => {
-    setToast(message);
-    window.clearTimeout(showToast.timeoutId);
-    showToast.timeoutId = window.setTimeout(() => setToast(''), 2500);
-  };
-
-  const handleWatchlistToggle = async () => {
-    if (!user?._id) {
-      showToast('Sign in to manage your watchlist');
-      return;
-    }
-
-    try {
-      setIsSavingWatchlist(true);
-      if (watchlistEntry?._id) {
-        await apiRequest(`/watchlist/${watchlistEntry._id}`, { method: 'DELETE' });
-        onWatchlistRemove(show._id);
-        showToast('Removed from watchlist');
-      } else {
-        const created = await apiRequest('/watchlist', {
-          method: 'POST',
-          body: JSON.stringify({ showId: show._id, status: 'Plan to Watch', progress: 0 }),
-        });
-        onWatchlistChange(created);
-        showToast('Added to watchlist');
-      }
-    } catch (error) {
-      showToast(error.message || 'Could not update watchlist');
-    } finally {
-      setIsSavingWatchlist(false);
-    }
-  };
-
-  const handleReview = async event => {
-    event.preventDefault();
-
-    if (!user?._id) {
-      showToast('Sign in to post a review');
-      return;
-    }
-
-    if (!newText.trim()) {
-      showToast('Write a quick review first');
-      return;
-    }
-
-    try {
-      setIsPostingReview(true);
-      const created = await apiRequest('/reviews', {
-        method: 'POST',
-        body: JSON.stringify({ showId: show._id, rating: newRating, reviewText: newText.trim() }),
-      });
-
-      setReviews(prev => [{
-        _id: created._id,
-        username: created.userId?.username || user.username,
-        rating: created.rating,
-        reviewText: created.reviewText,
-      }, ...prev]);
-      setNewText('');
-      showToast('Review posted');
-    } catch (error) {
-      showToast(error.message || 'Could not post review');
-    } finally {
-      setIsPostingReview(false);
-    }
-  };
-
-  const avgValue = reviews.length > 0 ? (reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length).toFixed(1) : (show.rating || null);
-  const avgRating = avgValue || 'N/A';
-
-  return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-box" onClick={event => event.stopPropagation()}>
-        <div style={{ position: 'relative', height: 220, overflow: 'hidden', borderRadius: '18px 18px 0 0' }}>
-          {show.posterUrl && <img src={show.posterUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', filter: 'brightness(0.3)' }} />}
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--surface-solid) 0%, rgba(19,19,34,0.4) 60%, transparent 100%)' }} />
-          <button onClick={onClose} style={{ position: 'absolute', top: 14, right: 14, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(6px)', border: '1px solid var(--border)', color: 'var(--text-muted)', width: 30, height: 30, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13 }}>X</button>
-          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '20px 24px' }}>
-            <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8, flexWrap: 'wrap' }}>
-              <TypeBadge type={show.type} />
-              <span style={{ background: 'rgba(255,216,77,0.12)', border: '1px solid rgba(255,216,77,0.2)', color: 'var(--yellow)', fontSize: 12, fontWeight: 700, padding: '2px 8px', borderRadius: 5 }}>{avgRating}</span>
-              <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{show.releaseYear}</span>
-            </div>
-            <h2 style={{ fontSize: 22, fontWeight: 800, lineHeight: 1.2 }}>{show.title}</h2>
-          </div>
-        </div>
-
-        <div style={{ padding: '18px 24px 26px' }}>
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 14 }}>
-            {(show.genre || []).map(item => <span key={item} style={{ fontSize: 11, color: 'var(--text-muted)', background: 'var(--surface2)', border: '1px solid var(--border)', padding: '2px 8px', borderRadius: 4 }}>{item}</span>)}
-          </div>
-          <p style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: 18 }}>{show.description}</p>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 18, background: 'var(--surface2)', borderRadius: 10, padding: '12px 16px', border: '1px solid var(--border)', marginBottom: 18 }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 28, fontWeight: 800, color: 'var(--yellow)', lineHeight: 1 }}>{avgRating}</div>
-              <div style={{ fontSize: 10, color: 'var(--text-dim)', marginTop: 2, fontWeight: 700 }}>avg rating</div>
-            </div>
-            <div style={{ width: 1, height: 34, background: 'var(--border)' }} />
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 18, fontWeight: 800, lineHeight: 1 }}>{reviews.length}</div>
-              <div style={{ fontSize: 10, color: 'var(--text-dim)', marginTop: 2, fontWeight: 700 }}>reviews</div>
-            </div>
-            <div style={{ flex: 1 }} />
-            {toast && <span style={{ fontSize: 12, color: 'var(--blue-bright)', fontWeight: 600 }}>{toast}</span>}
-            <button className={watchlistEntry ? 'btn-ghost' : 'btn-primary'} style={{ fontSize: 13, padding: '8px 16px' }} onClick={handleWatchlistToggle} disabled={isSavingWatchlist}>
-              {isSavingWatchlist ? 'Saving...' : watchlistEntry ? 'Remove from Watchlist' : 'Add to Watchlist'}
-            </button>
-          </div>
-
-          <h4 style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 12 }}>Community Reviews</h4>
-          {reviews.length === 0 && <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 16 }}>No reviews yet. Be the first!</p>}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 20 }}>
-            {reviews.map(review => (
-              <div key={review._id} style={{ display: 'flex', gap: 12, padding: '11px 13px', background: 'var(--surface2)', borderRadius: 8, border: '1px solid var(--border)' }}>
-                <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--grad)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700, color: '#fff', flexShrink: 0 }}>{review.username[0]?.toUpperCase()}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                    <span style={{ fontWeight: 700, fontSize: 13 }}>@{review.username}</span>
-                    <span style={{ background: 'rgba(255,216,77,0.1)', border: '1px solid rgba(255,216,77,0.2)', color: 'var(--yellow)', fontSize: 11, fontWeight: 700, padding: '1px 7px', borderRadius: 4 }}>{review.rating}/10</span>
-                  </div>
-                  <p style={{ color: 'var(--text-muted)', fontSize: 13, margin: 0, lineHeight: 1.5 }}>{review.reviewText}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ borderTop: '1px solid var(--border)', paddingTop: 16 }}>
-            <h4 style={{ fontSize: 11, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 12 }}>Write a Review</h4>
-            <form onSubmit={handleReview}>
-              <div style={{ marginBottom: 12 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                  <label style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>Your Rating</label>
-                  <span style={{ background: 'rgba(255,216,77,0.1)', border: '1px solid rgba(255,216,77,0.2)', color: 'var(--yellow)', fontSize: 12, fontWeight: 700, padding: '1px 8px', borderRadius: 4 }}>{newRating}/10</span>
-                </div>
-                <input type="range" min={1} max={10} value={newRating} onChange={event => setNewRating(Number(event.target.value))} style={{ width: '100%', accentColor: 'var(--blue)' }} />
-              </div>
-              <textarea className="ct-input" rows={3} placeholder="Share your thoughts..." value={newText} onChange={event => setNewText(event.target.value)} style={{ resize: 'vertical', marginBottom: 10 }} />
-              <button type="submit" className="btn-primary" style={{ fontSize: 13, padding: '8px 16px' }} disabled={isPostingReview}>{isPostingReview ? 'Posting...' : 'Post Review'}</button>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

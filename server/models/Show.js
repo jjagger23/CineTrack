@@ -6,7 +6,8 @@ const showSchema = new mongoose.Schema({
   genre: [String],
   releaseYear: Number,
   description: String,
-  posterUrl: String
+  posterUrl: String,
+  totalEpisodes: Number
 });
 
 module.exports = mongoose.model("Show", showSchema);

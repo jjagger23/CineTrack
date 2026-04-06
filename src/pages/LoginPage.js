@@ -86,13 +86,7 @@ export default function LoginPage() {
             New to CineTrack? <Link to="/register" style={{ fontWeight:700 }} className="grad-text">Create account</Link>
           </p>
 
-          <div style={{ marginTop:28, padding:'14px 16px', background:'var(--surface2)', borderRadius:10, border:'1px solid var(--border)', fontSize:13 }}>
-            <div style={{ fontWeight:700, marginBottom:6, fontSize:11, letterSpacing:0.8, textTransform:'uppercase', color:'var(--text-muted)' }}>Demo accounts</div>
-            <div style={{ color:'var(--text-muted)', lineHeight:1.9 }}>
-              Admin: <code style={{ color:'var(--blue-bright)', background:'var(--surface3)', padding:'1px 6px', borderRadius:4 }}>admin / admin123</code><br />
-              User: <code style={{ color:'var(--text)', background:'var(--surface3)', padding:'1px 6px', borderRadius:4 }}>any username + any password</code>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>

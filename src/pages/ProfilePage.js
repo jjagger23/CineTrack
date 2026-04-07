@@ -58,8 +58,8 @@ export default function ProfilePage() {
       { icon: 'Now', label: 'Watching', value: watching, color: 'var(--blue)' },
       { icon: 'List', label: 'Plan to Watch', value: planned, color: 'var(--text-muted)' },
       { icon: 'Rate', label: 'Reviews', value: reviews.length, color: 'var(--yellow)' },
-      { icon: 'Avg', label: 'Avg Rating', value: avgScore, color: 'var(--violet-bright)' },
-      { icon: 'Genre', label: 'Fav Genre', value: favGenre, color: 'var(--blue-bright)' },
+      { icon: 'Avg', label: 'Rating', value: avgScore, color: 'var(--violet-bright)' },
+      { icon: 'Genre', label: 'Favorite', value: favGenre, color: 'var(--blue-bright)' },
     ];
   }, [reviews, watchlist]);
 

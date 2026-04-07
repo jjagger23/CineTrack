@@ -10,6 +10,10 @@ const API = process.env.REACT_APP_API_URL;
 export default function CatalogPage() {
   const { user } = useAuth();
   const [shows, setShows] = useState([]);
+  const [tvmazeResults, setTvmazeResults] = useState([]);
+  const [tvmazeLoading, setTvmazeLoading] = useState(false);
+  const [tvmazeError, setTvmazeError] = useState('');
+  const [hasSearchedTvmaze, setHasSearchedTvmaze] = useState(false);
   const [search, setSearch] = useState('');
   const [genre, setGenre] = useState('');
   const [type, setType] = useState('');
@@ -42,6 +46,12 @@ export default function CatalogPage() {
     };
   }, []);
 
+  useEffect(() => {
+    setHasSearchedTvmaze(false);
+    setTvmazeResults([]);
+    setTvmazeError('');
+  }, [search, genre, type]);
+
   const filtered = useMemo(() => shows.filter(s => {
     const ms = !search || s.title.toLowerCase().includes(search.toLowerCase());
     const mg = !genre || s.genre.includes(genre);
@@ -60,6 +70,27 @@ export default function CatalogPage() {
 
   const isFiltering = search || genre || type;
   const featured = shows[4] || shows[0] || null;
+  const showTvmazeFallbackButton = filtered.length === 0 && search.trim().length >= 2;
+
+  const handleTvmazeSearch = async () => {
+    const q = search.trim();
+    if (!q) return;
+
+    try {
+      setTvmazeLoading(true);
+      setTvmazeError('');
+      setHasSearchedTvmaze(true);
+      const res = await fetch(`${API}/shows/tvmaze/search?q=${encodeURIComponent(q)}`);
+      if (!res.ok) throw new Error('Could not search TVmaze');
+      const data = await res.json();
+      setTvmazeResults(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setTvmazeResults([]);
+      setTvmazeError(err.message || 'Could not search TVmaze');
+    } finally {
+      setTvmazeLoading(false);
+    }
+  };
 
   return (
     <div className="catalogPage page-enter pageContainerWide">
@@ -127,6 +158,39 @@ export default function CatalogPage() {
         <div className="catalogEmptyState">
           <div className="catalogEmptyIcon">🔍</div>
           <p>No titles found.</p>
+          {showTvmazeFallbackButton && (
+            <button className="btn-primary catalogTvmazeButton" onClick={handleTvmazeSearch} disabled={tvmazeLoading}>
+              {tvmazeLoading ? 'Searching TVmaze...' : `Search TVmaze for "${search.trim()}"`}
+            </button>
+          )}
+          {tvmazeError && <p className="catalogStateError catalogTvmazeError">{tvmazeError}</p>}
+          {hasSearchedTvmaze && tvmazeResults.length > 0 && (
+            <div className="catalogTvmazeResults">
+              <h3 className="catalogTvmazeHeading">TVmaze Results</h3>
+              <div className="catalogTvmazeGrid">
+                {tvmazeResults.map(result => (
+                  <article key={result.tvmazeId} className="catalogTvmazeCard">
+                    {result.posterUrl ? <img src={result.posterUrl} alt={result.title} className="catalogTvmazeImage" /> : <div className="catalogTvmazeImage catalogTvmazeImagePlaceholder">No image</div>}
+                    <div className="catalogTvmazeBody">
+                      <h4 className="catalogTvmazeTitle">{result.title}</h4>
+                      <p className="catalogTvmazeMeta">
+                        {result.type}{result.releaseYear ? ` • ${result.releaseYear}` : ''}
+                      </p>
+                      {result.genre?.length > 0 && (
+                        <p className="catalogTvmazeGenres">{result.genre.slice(0, 3).join(', ')}</p>
+                      )}
+                      {result.description && <p className="catalogTvmazeDesc">{result.description}</p>}
+                      {result.externalUrl && (
+                        <a href={result.externalUrl} target="_blank" rel="noreferrer" className="catalogTvmazeLink">
+                          Open in TVmaze
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ) : view === 'list' || isFiltering ? (
         <div className="stagger contentCard catalogListCard">

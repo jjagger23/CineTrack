@@ -96,6 +96,81 @@
   gap: 44px;
 }
 
+.catalogTvmazeButton {
+  margin-top: 14px;
+}
+
+.catalogTvmazeError {
+  margin-top: 10px;
+}
+
+.catalogTvmazeResults {
+  margin-top: 26px;
+  text-align: left;
+}
+
+.catalogTvmazeHeading {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+
+.catalogTvmazeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.catalogTvmazeCard {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.catalogTvmazeImage {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  background: var(--surface3);
+}
+
+.catalogTvmazeImagePlaceholder {
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.catalogTvmazeBody {
+  padding: 10px 12px 12px;
+}
+
+.catalogTvmazeTitle {
+  margin: 0 0 4px;
+  font-size: 14px;
+}
+
+.catalogTvmazeMeta,
+.catalogTvmazeGenres {
+  margin: 0 0 4px;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.catalogTvmazeDesc {
+  margin: 6px 0 10px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.catalogTvmazeLink {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue-bright);
+}
+
 @media (max-width: 760px) {
   .catalogHeaderTitle {
     font-size: 24px;

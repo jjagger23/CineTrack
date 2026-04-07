@@ -16,6 +16,39 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET TVmaze search fallback results by query
+router.get("/tvmaze/search", async (req, res) => {
+  const query = String(req.query.q || "").trim();
+  if (!query) return res.status(400).json({ message: "Query is required" });
+
+  try {
+    const tvmazeRes = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(query)}`);
+    if (!tvmazeRes.ok) {
+      return res.status(502).json({ message: "TVmaze search failed" });
+    }
+
+    const rows = await tvmazeRes.json();
+    const results = (Array.isArray(rows) ? rows : []).slice(0, 20).map(entry => {
+      const show = entry?.show || {};
+      return {
+        tvmazeId: show.id,
+        title: show.name || "Untitled",
+        type: show.type || "Show",
+        genre: Array.isArray(show.genres) ? show.genres : [],
+        releaseYear: show.premiered ? Number(String(show.premiered).slice(0, 4)) : null,
+        description: show.summary ? String(show.summary).replace(/<[^>]*>/g, "").trim() : "",
+        posterUrl: show.image?.original || show.image?.medium || "",
+        rating: show.rating?.average || null,
+        externalUrl: show.url || "",
+      };
+    });
+
+    return res.json(results);
+  } catch (err) {
+    return res.status(500).json({ message: err.message || "TVmaze request failed" });
+  }
+});
+
 // GET single show by ID
 router.get("/:id", async (req, res) => {
   try {

@@ -1,21 +1,25 @@
 # CineTrack
 
-CineTrack is a movie and TV show tracking app built as part of our CIS 4004 term project. You log in, browse a catalog of shows, add things to your watchlist, and leave reviews. There's also an admin side for managing all the content.
+By Christian Evans, Sean Hinds, Joshua Jaggernauth, Rejean Lopez, and Dieplam Nguyen.
 
-Built with the MERN stack — MongoDB, Express, React, Node.js.
+CineTrack is a movie and TV show tracking app built as part of our CIS 4004 Spring 2026 project. You log in, browse a catalog of shows, add things to your watchlist, and leave reviews. There's also an admin side for managing all the content.
+
+Built with the MERN stack - MongoDB, Express, React, Node.js.
 
 ---
 
-## initial setup
-first change remove the .example portion from the .env.example files
+## Initial setup
 
-then add a 256 random JWT secret key as the key in the .env for the server. You can use any JWT generator from the internet or your own tools.
+Inside the root folder "CineTrack", remove the .example portion from the .env.example file.
+Inside "Cinetrack/server" folder, remove the .example portion from the .env.example file.
+
+Add a 256 bit random JWT secret key as the key in the .env for the /server file.
+You can use any JWT generator from the internet or your own tools.
 
 ## Running the Frontend
+Ensure Node.js installed. Grab it at nodejs.org (download the LTS version).
 
-You'll need Node.js installed. Grab it at nodejs.org (download the LTS version).
-
-Open the `frontend` folder in your terminal and run:
+Open the `CineTrack` folder in your terminal and run:
 
 ```
 npm install
@@ -27,33 +31,34 @@ Then:
 npm start
 ```
 
-Opens at **http://localhost:3000** in your browser.
+The application opens at **http://localhost:3000** in your browser.
 
 ---
 
 ## Running the Backend
 
-Need to have MongoDB running — Connection string: `mongodb://127.0.0.1:27017/` or whatever you have it configured as in the .env
+Have MongoDB Community Server installed at https://www.mongodb.com/try/download/community.
+Ensure MongoDB is running with connection string: `mongodb://127.0.0.1:27017/` or whatever you have it configured as in the .env.
 
-1. Open a terminal and navigate to the `server` folder:
+Open terminal and navigate to the `server` folder:
 
 ```
 cd server
 ```
 
-2. Install dependencies:
+Install dependencies:
 
 ```
 npm install
 ```
 
-3. Start the server:
+Start the server:
 
 ```
 node server.js
 ```
 
-Runs on **http://localhost:5000** by default unless you change it.
+Runs on **http://localhost:5000** by default unless changed. The result should be "CineTrack API running".
 
 ---
 
@@ -102,4 +107,4 @@ Runs on **http://localhost:5000** by default unless you change it.
 
 ## Notes
 
-Currently no known issues.
+The frontend is connected with real backend data within CineTrack API.

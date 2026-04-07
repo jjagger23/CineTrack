@@ -1,4 +1,6 @@
 const User = require("../models/User");
+const Review = require("../models/Review");
+const Watchlist = require("../models/Watchlist");
 
 exports.getUsers = async (req, res) => {
   try {
@@ -21,8 +23,10 @@ exports.deleteUser = async (req, res) => {
       return res.status(400).json({ message: "Cannot delete admin account" });
     }
 
+    await Review.deleteMany({ userId: user._id });
+    await Watchlist.deleteMany({ userId: user._id });
     await user.deleteOne();
-    res.json({ message: "User deleted" });
+    res.json({ message: "User and related content deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

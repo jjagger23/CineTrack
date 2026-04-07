@@ -37,10 +37,11 @@
 .catalogHeroContent {
   position: absolute;
   inset: 0;
-  padding: 48px 52px;
+  padding: 52px 52px 48px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  height: fit-content;
 }
 
 .catalogHeroBadges {
@@ -62,7 +63,7 @@
 
 .catalogHeroTitle {
   font-size: 48px;
-  line-height: 1;
+  line-height: 1.12;
   font-family: var(--font-display);
   letter-spacing: -1px;
   margin-bottom: 10px;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import TypeBadge from './TypeBadge';
 
 export default function ShowDetailModal({ show, onClose, user, apiBase }) {
@@ -112,7 +113,7 @@ export default function ShowDetailModal({ show, onClose, user, apiBase }) {
   const avgValue = reviews.length > 0 ? (reviews.reduce((a, r) => a + r.rating, 0) / reviews.length).toFixed(1) : (show.rating || null);
   const avgRating = avgValue || 'N/A';
 
-  return (
+  const modalContent = (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-box" onClick={e => e.stopPropagation()}>
         <div className="modalHeaderMedia">
@@ -190,4 +191,6 @@ export default function ShowDetailModal({ show, onClose, user, apiBase }) {
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 }

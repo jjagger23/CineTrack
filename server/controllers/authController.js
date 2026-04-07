@@ -10,12 +10,40 @@ const makeToken = (user) => {
   );
 };
 
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
+
+const ensureDefaultAdminAccount = async () => {
+  const existing = await User.findOne({ username: ADMIN_USERNAME });
+
+  if (!existing) {
+    const hashedPassword = await bcrypt.hash(ADMIN_PASSWORD, 10);
+    await User.create({
+      username: ADMIN_USERNAME,
+      password: hashedPassword,
+      role: "admin"
+    });
+    return;
+  }
+
+  const passwordMatches = await bcrypt.compare(ADMIN_PASSWORD, existing.password);
+  if (existing.role !== "admin" || !passwordMatches) {
+    existing.role = "admin";
+    existing.password = await bcrypt.hash(ADMIN_PASSWORD, 10);
+    await existing.save();
+  }
+};
+
 exports.register = async (req, res) => {
   try {
     const { username, password } = req.body;
 
     if (!username || !password) {
       return res.status(400).json({ message: "Username and password are required" });
+    }
+
+    if (username.toLowerCase() === ADMIN_USERNAME.toLowerCase()) {
+      return res.status(400).json({ message: "This username is reserved" });
     }
 
     const existing = await User.findOne({ username });
@@ -47,6 +75,10 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    if (username && username.toLowerCase() === ADMIN_USERNAME.toLowerCase()) {
+      await ensureDefaultAdminAccount();
+    }
 
     const user = await User.findOne({ username });
     if (!user) {

@@ -107,4 +107,4 @@ Runs on **http://localhost:5000** by default unless changed. The result should b
 
 ## Notes
 
-The frontend is connected with real backend data within CineTrack API.
+The frontend is connected with real backend data within CineTrack API. The TVmaze API is also used for sourcing, but the admin account can also add shows and movies.

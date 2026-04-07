@@ -1,0 +1,213 @@
+.watchlistStatusGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.watchlistStatusCard {
+  background: var(--surface-solid);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.watchlistStatusCardActive {
+  background: rgba(77, 159, 255, 0.1);
+  border-color: rgba(77, 159, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(77, 159, 255, 0.1);
+}
+
+.watchlistStatusValue {
+  font-size: 22px;
+  line-height: 1;
+  font-family: var(--font-display);
+  margin-bottom: 4px;
+}
+
+.watchlistStatusValueWatching {
+  color: var(--blue);
+}
+
+.watchlistStatusValueCompleted {
+  color: var(--green);
+}
+
+.watchlistStatusValueDropped {
+  color: var(--red);
+}
+
+.watchlistStatusValuePlan,
+.watchlistStatusLabel {
+  color: var(--muted);
+}
+
+.watchlistStatusLabel {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.watchlistEmptyState {
+  text-align: center;
+  padding: 80px 0;
+  color: var(--muted);
+}
+
+.watchlistEmptyIcon {
+  font-size: 52px;
+  margin-bottom: 16px;
+}
+
+.watchlistEmptyText {
+  font-size: 15px;
+  margin-bottom: 18px;
+}
+
+.watchlistBrowseButton {
+  display: inline-flex;
+  padding: 10px 22px;
+  font-size: 14px;
+}
+
+.watchlistListCard {
+  box-shadow: var(--card-shadow);
+}
+
+.watchlistRow {
+  display: flex;
+  align-items: center;
+  transition: background 0.15s;
+}
+
+.watchlistRow:hover {
+  background: rgba(77, 159, 255, 0.03);
+}
+
+.watchlistRowBordered {
+  border-bottom: 1px solid var(--border2);
+}
+
+.watchlistStatusStrip {
+  width: 3px;
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.watchlistStripWatching {
+  background: var(--blue);
+}
+
+.watchlistStripCompleted {
+  background: var(--green);
+}
+
+.watchlistStripDropped {
+  background: var(--red);
+}
+
+.watchlistStripPlan {
+  background: var(--muted);
+}
+
+.watchlistPosterWrap {
+  width: 54px;
+  height: 76px;
+  margin: 10px 14px;
+  border-radius: 5px;
+  background: var(--surface2);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.watchlistRowMain {
+  flex: 1;
+}
+
+.watchlistShowTitle {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.watchlistShowMeta {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.watchlistProgressWrap {
+  margin-top: 8px;
+  max-width: 200px;
+}
+
+.watchlistProgressHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.watchlistProgressText,
+.watchlistProgressPct {
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.watchlistProgressText {
+  font-weight: 600;
+}
+
+.watchlistProgressPct {
+  font-weight: 700;
+}
+
+.watchlistProgressBar {
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.watchlistProgressBar::-webkit-progress-bar {
+  background: var(--surface3);
+}
+
+.watchlistProgressBar::-webkit-progress-value,
+.watchlistProgressBar::-moz-progress-bar {
+  background: var(--blue);
+}
+
+.watchlistControls {
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.watchlistStatusSelect {
+  width: 155px;
+  font-size: 13px;
+  padding: 7px 10px;
+}
+
+.watchlistDeleteButton {
+  border: 0;
+  background: none;
+  color: var(--text-dim);
+  font-size: 17px;
+  padding: 4px 6px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.watchlistDeleteButton:hover {
+  color: var(--red);
+}
+
+@media (max-width: 760px) {
+  .watchlistStatusGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

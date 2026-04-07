@@ -1,0 +1,147 @@
+.adminGreeting {
+  margin-bottom: 36px;
+}
+
+.adminGreetingTitle {
+  font-size: 40px;
+  font-family: var(--font-display);
+  letter-spacing: -0.5px;
+}
+
+.adminStatGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.adminStatLink {
+  text-decoration: none;
+}
+
+.adminStatHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.adminStatIcon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.adminIconBlue {
+  background: rgba(77, 159, 255, 0.1);
+}
+
+.adminIconGreen {
+  background: rgba(77, 255, 160, 0.1);
+}
+
+.adminIconYellow {
+  background: rgba(255, 216, 77, 0.1);
+}
+
+.adminIconViolet {
+  background: rgba(192, 132, 252, 0.12);
+}
+
+.adminStatArrow {
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.adminStatValue {
+  font-size: 38px;
+  line-height: 1;
+  font-family: var(--font-display);
+  margin-bottom: 4px;
+}
+
+.adminStatValueBlue {
+  color: var(--blue);
+}
+
+.adminStatValueGreen {
+  color: var(--green);
+}
+
+.adminStatValueYellow {
+  color: var(--yellow);
+}
+
+.adminStatValueViolet {
+  color: var(--violet-bright);
+}
+
+.adminStatLabel {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.adminPanelGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.adminPanelCard {
+  box-shadow: none;
+}
+
+.adminPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.adminPanelTitle {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.adminPanelManageLink {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.adminTableRight {
+  text-align: right;
+}
+
+.adminPosterThumb {
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.adminRowStrong {
+  font-size: 13px;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.adminRowSubtext {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+@media (max-width: 1080px) {
+  .adminStatGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .adminPanelGrid {
+    grid-template-columns: 1fr;
+  }
+}

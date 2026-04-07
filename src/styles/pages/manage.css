@@ -1,0 +1,155 @@
+.manageFormCard {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: var(--card-shadow);
+  animation: pageIn 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.manageFormGlow {
+  position: absolute;
+  inset: 0;
+  background: rgba(77, 159, 255, 0.04);
+  pointer-events: none;
+}
+
+.manageFormContent {
+  position: relative;
+  z-index: 1;
+}
+
+.manageFormTitle {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.manageFormTopGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.manageFieldGroup {
+  margin-bottom: 12px;
+}
+
+.manageFieldGroupBottom {
+  margin-bottom: 18px;
+}
+
+.manageUserInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.manageUserAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.manageUserAvatarAdmin {
+  background: var(--blue-dim);
+  color: #fff;
+  border: 1.5px solid rgba(77, 159, 255, 0.3);
+  box-shadow: 0 2px 10px rgba(77, 159, 255, 0.25);
+}
+
+.manageUserAvatarUser {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  color: var(--muted);
+}
+
+.manageReviewRow {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 18px;
+  transition: background 0.15s;
+}
+
+.manageReviewRow:hover {
+  background: rgba(77, 159, 255, 0.03);
+}
+
+.manageReviewRowBordered {
+  border-bottom: 1px solid var(--border2);
+}
+
+.manageReviewAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--blue-dim);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(77, 159, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.manageReviewBody {
+  flex: 1;
+}
+
+.manageReviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.manageReviewUser {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.manageReviewVerb {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.manageReviewShow {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.manageReviewDate {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+.manageReviewText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.manageReviewDelete {
+  flex-shrink: 0;
+}
+
+@media (max-width: 760px) {
+  .manageFormTopGrid {
+    grid-template-columns: 1fr;
+  }
+}

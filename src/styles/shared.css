@@ -1,0 +1,192 @@
+:root {
+  --container-wide: 1100px;
+  --container-medium: 900px;
+  --container-reviews: 1000px;
+  --pad-x: 28px;
+  --pad-y: 36px;
+  --pad-bottom: 60px;
+  --card-bg: var(--surface-solid);
+  --card-border: 1px solid var(--border);
+  --card-radius: 14px;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --muted: var(--text-muted);
+}
+
+.appShell {
+  min-height: 100vh;
+}
+
+.pageContainerWide,
+.pageContainerMedium,
+.pageContainerReviews {
+  margin: 0 auto;
+  padding: var(--pad-y) var(--pad-x) var(--pad-bottom);
+}
+
+.pageContainerWide {
+  max-width: var(--container-wide);
+}
+
+.pageContainerMedium {
+  max-width: var(--container-medium);
+}
+
+.pageContainerReviews {
+  max-width: var(--container-reviews);
+}
+
+.pageHeaderGroup {
+  margin-bottom: 28px;
+}
+
+.pageHeaderRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.pageTitle {
+  font-size: 38px;
+  line-height: 1;
+  font-family: var(--font-display);
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.pageSubtitle,
+.catalogHeaderSubtext,
+.adminGreetingText {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.contentCard {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+}
+
+.contentCardCompact {
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.tableThumbHeader {
+  width: 48px;
+}
+
+.tableThumbCell {
+  padding: 10px 12px !important;
+}
+
+.tablePosterWrap,
+.adminPosterThumb {
+  width: 36px;
+  height: 50px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--surface2);
+}
+
+.tablePosterImage,
+.adminPosterThumbImage,
+.watchlistPosterImage,
+.profileRecentPosterImage,
+.showRowPosterImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tableStrongCell,
+.manageUserHandle {
+  font-weight: 600;
+}
+
+.tableMutedCell {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tableTagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tableTagCompact {
+  font-size: 10px;
+  padding: 1px 7px;
+}
+
+.tableDash {
+  color: var(--text-dim);
+}
+
+.fieldLabelUpper,
+.modalSectionTitle {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.fieldLabelUpper {
+  margin-bottom: 6px;
+}
+
+.resizeVertical,
+.modalReviewTextarea {
+  resize: vertical;
+}
+
+.ratingTag {
+  display: inline-block;
+  background: rgba(255, 216, 77, 0.1);
+  border: 1px solid rgba(255, 216, 77, 0.2);
+  color: var(--yellow);
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.ratingTagCompact {
+  border-radius: 5px;
+}
+
+.ratingTagTiny {
+  font-size: 11px;
+  padding: 1px 7px;
+}
+
+.sectionLabelUpper {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.emptyStateInline {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+@media (max-width: 760px) {
+  .pageContainerWide,
+  .pageContainerMedium,
+  .pageContainerReviews {
+    padding: 24px 16px 40px;
+  }
+}

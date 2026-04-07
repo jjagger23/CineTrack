@@ -1,0 +1,283 @@
+.authLayout,
+.registerLayout {
+  min-height: 100vh;
+  display: flex;
+}
+
+.authLayout {
+  overflow: hidden;
+  position: relative;
+}
+
+.registerLayout {
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loginHeroPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+.loginBrandWrap {
+  margin-bottom: 52px;
+}
+
+.loginBrandRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loginBrandBadge,
+.registerBrandBadge {
+  background: var(--blue-dim);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginBrandBadge {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 900;
+  box-shadow: 0 4px 16px rgba(77, 159, 255, 0.35);
+}
+
+.loginBrandText,
+.registerBrandText {
+  font-family: var(--font-display);
+  letter-spacing: 2px;
+}
+
+.loginBrandText {
+  font-size: 22px;
+}
+
+.loginHeroTitle {
+  font-size: 56px;
+  line-height: 1.05;
+  font-family: var(--font-display);
+  letter-spacing: -1px;
+  margin-bottom: 18px;
+}
+
+.loginHeroDescription {
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 380px;
+  line-height: 1.7;
+}
+
+.loginFeatureList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.loginFeatureChip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.loginFormPanel {
+  width: 440px;
+  background: var(--surface-solid);
+  border-left: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 44px;
+  animation: pageIn 0.4s ease;
+}
+
+.loginFormWrap {
+  width: 100%;
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 44px 40px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  animation: pageIn 0.3s ease;
+}
+
+.registerBrandLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.registerBrandBadge {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.registerBrandText {
+  font-size: 17px;
+}
+
+.authCardTitle {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.authCardSubtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.authCardSubtitleSpaced {
+  margin-bottom: 28px;
+}
+
+.authErrorBox {
+  background: rgba(255, 85, 102, 0.08);
+  border: 1px solid rgba(255, 85, 102, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  color: var(--red);
+  font-size: 13px;
+}
+
+.authErrorBoxSmall {
+  margin-bottom: 18px;
+}
+
+.authInputGroup {
+  margin-bottom: 16px;
+}
+
+.authInputGroupCompact {
+  margin-bottom: 14px;
+}
+
+.authInputLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.authInputLabelCompact {
+  margin-bottom: 6px;
+}
+
+.authInputSpacer {
+  margin-bottom: 24px;
+}
+
+.authSubmitButton {
+  width: 100%;
+  justify-content: center;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.authOrDivider {
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.authOrLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.authOrText {
+  position: relative;
+  background: var(--surface-solid);
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.authFooterText {
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.authFooterTextTop {
+  margin-top: 20px;
+}
+
+.authFooterLink {
+  font-weight: 700;
+}
+
+.authDemoCard {
+  margin-top: 28px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.authDemoTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.authDemoText {
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.authCode {
+  background: var(--surface3);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--text);
+}
+
+.authCodeAdmin {
+  color: var(--blue-bright);
+}
+
+@media (max-width: 1080px) {
+  .loginHeroPanel {
+    display: none;
+  }
+
+  .loginFormPanel {
+    width: 100%;
+    border-left: 0;
+  }
+}

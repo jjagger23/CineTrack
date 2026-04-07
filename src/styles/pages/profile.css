@@ -1,0 +1,220 @@
+.profileHeaderCard {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 40px;
+  padding: 28px 32px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--card-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.profileHeaderGlow {
+  position: absolute;
+  inset: 0;
+  background: rgba(77, 159, 255, 0.05);
+  pointer-events: none;
+}
+
+.profileHeaderContent {
+  position: relative;
+  z-index: 1;
+}
+
+.profileAvatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--blue-dim);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(77, 159, 255, 0.3);
+}
+
+.profileUsername {
+  font-size: 34px;
+  font-family: var(--font-display);
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+
+.profileMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profileMemberSince {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.profileStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 36px;
+}
+
+.profileStatLabel {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.profileStatValue {
+  font-size: 32px;
+  line-height: 1;
+  font-family: var(--font-display);
+}
+
+.profileStatValueGreen {
+  color: var(--green);
+}
+
+.profileStatValueBlue {
+  color: var(--blue);
+}
+
+.profileStatValueMuted {
+  color: var(--muted);
+}
+
+.profileStatValueYellow {
+  color: var(--yellow);
+}
+
+.profileStatValueViolet {
+  color: var(--violet-bright);
+}
+
+.profileStatValueBrightBlue {
+  color: var(--blue-bright);
+}
+
+.profileColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.profileRecentRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  transition: background 0.15s;
+}
+
+.profileRecentRow:hover {
+  background: rgba(77, 159, 255, 0.03);
+}
+
+.profileRecentRowBordered {
+  border-bottom: 1px solid var(--border2);
+}
+
+.profileRecentPosterWrap {
+  width: 36px;
+  height: 50px;
+  border-radius: 4px;
+  background: var(--surface2);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.profileRecentContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.profileRecentTitle {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 3px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.profileRecentFooter {
+  padding: 10px 16px;
+  border-top: 1px solid var(--border2);
+}
+
+.profileInlineLink {
+  color: var(--blue-bright);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.profileInlineLinkLarge {
+  font-size: 13px;
+}
+
+.profileEmptyReviewsCard {
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.profileEmptyIcon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.profileEmptyText {
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+
+.profileReviewRow {
+  padding: 12px 16px;
+}
+
+.profileReviewRowBordered {
+  border-bottom: 1px solid var(--border2);
+}
+
+.profileReviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.profileReviewShow {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.profileReviewText {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+@media (max-width: 1080px) {
+  .profileColumns {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .profileStatsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

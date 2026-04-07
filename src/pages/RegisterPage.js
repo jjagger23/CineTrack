@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import LogoIcon from '../components/LogoIcon';
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -29,7 +30,7 @@ export default function RegisterPage() {
     <div className="registerLayout">
       <div className="registerCard">
         <Link to="/" className="registerBrandLink">
-          <div className="registerBrandBadge">C</div>
+          <div className="registerBrandBadge"><LogoIcon /></div>
           <span className="grad-text registerBrandText">CINETRACK</span>
         </Link>
 

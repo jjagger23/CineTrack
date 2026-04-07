@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import LogoIcon from '../components/LogoIcon';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -30,7 +31,7 @@ export default function LoginPage() {
       <div className="loginHeroPanel">
         <div className="loginBrandWrap">
           <div className="loginBrandRow">
-            <div className="loginBrandBadge">C</div>
+            <div className="loginBrandBadge"><LogoIcon /></div>
             <span className="grad-text loginBrandText">CINETRACK</span>
           </div>
         </div>

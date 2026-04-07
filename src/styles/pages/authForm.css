@@ -1,0 +1,119 @@
+.authCardTitle {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.authCardSubtitle {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 32px;
+}
+
+.authCardSubtitleSpaced {
+  margin-bottom: 28px;
+}
+
+.authInputGroup {
+  margin-bottom: 16px;
+}
+
+.authInputGroupCompact {
+  margin-bottom: 14px;
+}
+
+.authInputLabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.authInputLabelCompact {
+  margin-bottom: 6px;
+}
+
+.authInputSpacer {
+  margin-bottom: 24px;
+}
+
+.authSubmitButton {
+  width: 100%;
+  justify-content: center;
+  padding: 12px;
+  font-size: 15px;
+}
+
+.authOrDivider {
+  text-align: center;
+  margin: 20px 0;
+  position: relative;
+}
+
+.authOrLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.authOrText {
+  position: relative;
+  background: var(--surface-solid);
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.authFooterText {
+  text-align: center;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.authFooterTextTop {
+  margin-top: 20px;
+}
+
+.authFooterLink {
+  font-weight: 700;
+}
+
+.authDemoCard {
+  margin-top: 28px;
+  padding: 14px 16px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.authDemoTitle {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.authDemoText {
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.authCode {
+  background: var(--surface3);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--text);
+}
+
+.authCodeAdmin {
+  color: var(--blue-bright);
+}

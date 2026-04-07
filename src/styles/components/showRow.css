@@ -1,0 +1,76 @@
+.showRowBordered {
+  border-bottom: 1px solid var(--border2);
+}
+
+.showRowIndex {
+  width: 26px;
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 700;
+  padding-top: 3px;
+}
+
+.showRowPosterWrap {
+  width: 50px;
+  height: 70px;
+  border-radius: 6px;
+  background: var(--surface2);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.showRowMain {
+  flex: 1;
+  min-width: 0;
+}
+
+.showRowTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.showRowTitle {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.showRowYear {
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.showRowDescription {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0 0 8px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.showRowGenreWrap {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.showRowGenreTag {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dim);
+  background: var(--surface3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 7px;
+}
+
+.ratingBoxStar {
+  font-size: 10px;
+  margin-top: 3px;
+}

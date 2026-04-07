@@ -1,0 +1,61 @@
+.authLayout,
+.registerLayout {
+  min-height: 100vh;
+  display: flex;
+}
+
+.authLayout {
+  overflow: hidden;
+  position: relative;
+}
+
+.registerLayout {
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.loginHeroPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px 80px;
+}
+
+.loginFormPanel {
+  width: 440px;
+  background: var(--surface-solid);
+  border-left: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 44px;
+  animation: pageIn 0.4s ease;
+}
+
+.loginFormWrap {
+  width: 100%;
+}
+
+.registerCard {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface-solid);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 44px 40px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  animation: pageIn 0.3s ease;
+}
+
+@media (max-width: 1080px) {
+  .loginHeroPanel {
+    display: none;
+  }
+
+  .loginFormPanel {
+    width: 100%;
+    border-left: 0;
+  }
+}

@@ -1,0 +1,87 @@
+.loginBrandWrap {
+  margin-bottom: 52px;
+}
+
+.loginBrandRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.loginBrandBadge,
+.registerBrandBadge {
+  background: var(--blue-dim);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginBrandBadge {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 900;
+  box-shadow: 0 4px 16px rgba(77, 159, 255, 0.35);
+}
+
+.loginBrandText,
+.registerBrandText {
+  font-family: var(--font-display);
+  letter-spacing: 2px;
+}
+
+.loginBrandText {
+  font-size: 22px;
+}
+
+.loginHeroTitle {
+  font-size: 56px;
+  line-height: 1.05;
+  font-family: var(--font-display);
+  letter-spacing: -1px;
+  margin-bottom: 18px;
+}
+
+.loginHeroDescription {
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 380px;
+  line-height: 1.7;
+}
+
+.loginFeatureList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.loginFeatureChip {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.registerBrandLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.registerBrandBadge {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.registerBrandText {
+  font-size: 17px;
+}

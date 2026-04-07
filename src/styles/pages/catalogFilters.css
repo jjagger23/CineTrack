@@ -1,0 +1,103 @@
+.catalogHeaderRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.catalogHeaderTitle {
+  font-size: 30px;
+  font-family: var(--font-display);
+  letter-spacing: -0.5px;
+  margin-bottom: 3px;
+}
+
+.catalogViewToggle {
+  display: flex;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.catalogViewButton {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 16px;
+  transition: all 0.2s;
+}
+
+.catalogViewButtonActive {
+  background: var(--blue-dim);
+  color: #fff;
+}
+
+.catalogFiltersRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.catalogSearchWrap {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.catalogSearchIcon {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.catalogSearchInput {
+  padding-left: 34px;
+}
+
+.catalogTypeSelect {
+  max-width: 148px;
+}
+
+.catalogClearButton {
+  font-size: 12px;
+  padding: 8px 13px;
+}
+
+.catalogGenrePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+
+.catalogGenrePill {
+  background: none;
+  border: none;
+}
+
+.catalogListCard {
+  box-shadow: var(--card-shadow);
+}
+
+.catalogCategoryGroups {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+@media (max-width: 760px) {
+  .catalogHeaderTitle {
+    font-size: 24px;
+  }
+}

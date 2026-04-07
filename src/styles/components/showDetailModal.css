@@ -1,0 +1,251 @@
+.modalHeaderMedia {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 18px 18px 0 0;
+}
+
+.modalHeaderImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: brightness(0.3);
+}
+
+.modalHeaderGradient {
+  position: absolute;
+  inset: 0;
+  background: rgba(19, 19, 34, 0.55);
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--muted);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalHeaderContent {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 24px;
+}
+
+.modalHeaderBadges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.modalHeaderYear {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.modalHeaderTitle {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.modalBodyContent {
+  padding: 18px 24px 26px;
+}
+
+.modalGenreRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.modalGenreTag {
+  font-size: 11px;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.modalDescription {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.modalStatsBar {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 18px;
+}
+
+.modalStatBlock {
+  text-align: center;
+}
+
+.modalStatPrimary {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 800;
+  color: var(--yellow);
+}
+
+.modalStatSecondary {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.modalStatLabel {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+
+.modalStatDivider {
+  width: 1px;
+  height: 34px;
+  background: var(--border);
+}
+
+.modalStatsSpacer {
+  flex: 1;
+}
+
+.modalToastText {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue-bright);
+}
+
+.modalWatchlistButton,
+.modalPostButton {
+  font-size: 13px;
+  padding: 8px 16px;
+}
+
+.modalSectionTitle {
+  margin-bottom: 12px;
+}
+
+.modalEmptyReviews {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.modalReviewsList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.modalReviewItem {
+  display: flex;
+  gap: 12px;
+  padding: 11px 13px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.modalReviewAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--blue-dim);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modalReviewBody {
+  flex: 1;
+}
+
+.modalReviewHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.modalReviewUser {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.modalReviewText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.modalReviewComposer {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.modalRatingGroup {
+  margin-bottom: 12px;
+}
+
+.modalRatingRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.modalRatingLabel {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.modalRangeInput {
+  width: 100%;
+  accent-color: var(--blue);
+}
+
+.modalReviewTextarea {
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 760px) {
+  .modalBodyContent {
+    padding: 16px;
+  }
+
+  .modalStatsBar {
+    flex-wrap: wrap;
+  }
+}

@@ -196,3 +196,26 @@
     padding: 24px 16px 40px;
   }
 }
+
+.catalogStateMessage,
+.catalogEmptyState {
+  text-align: center;
+  color: var(--muted);
+}
+
+.catalogStateMessage {
+  padding: 60px 0;
+}
+
+.catalogStateError {
+  color: var(--red);
+}
+
+.catalogEmptyState {
+  padding: 80px 0;
+}
+
+.catalogEmptyIcon {
+  font-size: 44px;
+  margin-bottom: 14px;
+}

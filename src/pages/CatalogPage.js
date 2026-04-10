@@ -21,6 +21,7 @@ export default function CatalogPage() {
   const [view, setView] = useState('category');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [tvmazeImportingId, setTvmazeImportingId] = useState(null);
 
   useEffect(() => {
     let active = true;
@@ -89,6 +90,35 @@ export default function CatalogPage() {
       setTvmazeError(err.message || 'Could not search TVmaze');
     } finally {
       setTvmazeLoading(false);
+    }
+  };
+
+  const handleTvmazeSelect = async result => {
+    try {
+      setTvmazeImportingId(result.tvmazeId);
+      const res = await fetch(`${API}/shows/tvmaze/import`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(result),
+      });
+
+      if (!res.ok) throw new Error('Could not import TVmaze show');
+
+      const savedShow = await res.json();
+      setShows(prev => {
+        const existingIndex = prev.findIndex(show => show._id === savedShow._id);
+        if (existingIndex >= 0) {
+          const next = [...prev];
+          next[existingIndex] = savedShow;
+          return next;
+        }
+        return [savedShow, ...prev];
+      });
+      setSelected(savedShow);
+    } catch (err) {
+      setTvmazeError(err.message || 'Could not import TVmaze show');
+    } finally {
+      setTvmazeImportingId(null);
     }
   };
 
@@ -169,7 +199,20 @@ export default function CatalogPage() {
               <h3 className="catalogTvmazeHeading">TVmaze Results</h3>
               <div className="catalogTvmazeGrid">
                 {tvmazeResults.map(result => (
-                  <article key={result.tvmazeId} className="catalogTvmazeCard">
+                  <article
+                    key={result.tvmazeId}
+                    className="catalogTvmazeCard"
+                    onClick={() => handleTvmazeSelect(result)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleTvmazeSelect(result);
+                      }
+                    }}
+                    aria-busy={tvmazeImportingId === result.tvmazeId}
+                  >
                     {result.posterUrl ? <img src={result.posterUrl} alt={result.title} className="catalogTvmazeImage" /> : <div className="catalogTvmazeImage catalogTvmazeImagePlaceholder">No image</div>}
                     <div className="catalogTvmazeBody">
                       <h4 className="catalogTvmazeTitle">{result.title}</h4>
@@ -180,8 +223,17 @@ export default function CatalogPage() {
                         <p className="catalogTvmazeGenres">{result.genre.slice(0, 3).join(', ')}</p>
                       )}
                       {result.description && <p className="catalogTvmazeDesc">{result.description}</p>}
+                      {tvmazeImportingId === result.tvmazeId && (
+                        <p className="catalogTvmazeMeta">Opening details...</p>
+                      )}
                       {result.externalUrl && (
-                        <a href={result.externalUrl} target="_blank" rel="noreferrer" className="catalogTvmazeLink">
+                        <a
+                          href={result.externalUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="catalogTvmazeLink"
+                          onClick={e => e.stopPropagation()}
+                        >
                           Open in TVmaze
                         </a>
                       )}

@@ -49,6 +49,45 @@ router.get("/tvmaze/search", async (req, res) => {
   }
 });
 
+// POST import a TVmaze result into the global shows collection
+router.post("/tvmaze/import", async (req, res) => {
+  const payload = req.body || {};
+  const tvmazeId = Number(payload.tvmazeId);
+
+  if (!Number.isFinite(tvmazeId)) {
+    return res.status(400).json({ message: "tvmazeId is required" });
+  }
+
+  try {
+    const imported = await Show.findOneAndUpdate(
+      { tvmazeId },
+      {
+        $set: {
+          tvmazeId,
+          title: payload.title || "Untitled",
+          type: payload.type === "Movie" ? "Movie" : "TV Show",
+          genre: Array.isArray(payload.genre) ? payload.genre : [],
+          releaseYear: payload.releaseYear || null,
+          description: payload.description || "",
+          posterUrl: payload.posterUrl || "",
+          rating: payload.rating ?? null,
+          externalUrl: payload.externalUrl || ""
+        }
+      },
+      {
+        new: true,
+        upsert: true,
+        setDefaultsOnInsert: true,
+        runValidators: true
+      }
+    );
+
+    return res.status(201).json(imported);
+  } catch (err) {
+    return res.status(500).json({ message: err.message || "Could not import TVmaze show" });
+  }
+});
+
 // GET single show by ID
 router.get("/:id", async (req, res) => {
   try {

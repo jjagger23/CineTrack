@@ -33,4 +33,39 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PUT update a watchlist entry
+router.put("/:id", async (req, res) => {
+  try {
+    const entry = await WatchList.findById(req.params.id);
+
+    if (!entry) {
+      return res.status(404).json({ message: "Watchlist item not found" });
+    }
+
+    entry.status = req.body.status ?? entry.status;
+    entry.progress = req.body.progress ?? entry.progress;
+
+    await entry.save();
+    await entry.populate("showId");
+    res.json(entry);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+// DELETE remove a watchlist entry
+router.delete("/:id", async (req, res) => {
+  try {
+    const entry = await WatchList.findByIdAndDelete(req.params.id);
+
+    if (!entry) {
+      return res.status(404).json({ message: "Watchlist item not found" });
+    }
+
+    res.json({ message: "Removed from watchlist" });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 module.exports = router;

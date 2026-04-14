@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { MOCK_WATCHLIST } from '../data/mockData';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const STATUSES = ['Plan to Watch', 'Watching', 'Completed', 'Dropped'];
+const API = process.env.REACT_APP_API_URL;
 
 const statusClass = s => ({
   Watching: 's-watching',
@@ -24,14 +25,109 @@ const statusStatClass = s => ({
   'Plan to Watch': 'watchlistStatusValuePlan',
 }[s] || 'watchlistStatusValuePlan');
 
-export default function WatchlistPage() {
-  const [list, setList] = useState(MOCK_WATCHLIST);
-  const [filter, setFilter] = useState('');
+const normalizeEntry = entry => {
+  const show = entry?.showId && typeof entry.showId === 'object' ? entry.showId : entry?.show;
+  if (!show) return null;
 
-  const updateStatus = (id, status) => setList(prev => prev.map(e => (e._id === id ? { ...e, status } : e)));
-  const removeEntry = id => setList(prev => prev.filter(e => e._id !== id));
-  const filtered = filter ? list.filter(e => e.status === filter) : list;
-  const counts = STATUSES.reduce((acc, s) => ({ ...acc, [s]: list.filter(e => e.status === s).length }), {});
+  return {
+    _id: entry._id,
+    status: entry.status || 'Plan to Watch',
+    progress: entry.progress || 0,
+    show: {
+      _id: show._id,
+      title: show.title,
+      type: show.type,
+      releaseYear: show.releaseYear,
+      totalEpisodes: show.totalEpisodes || 0,
+      posterUrl: show.posterUrl,
+    },
+  };
+};
+
+export default function WatchlistPage() {
+  const { user } = useAuth();
+  const [list, setList] = useState([]);
+  const [filter, setFilter] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    let active = true;
+
+    const loadWatchlist = async () => {
+      if (!user?._id) {
+        if (active) {
+          setList([]);
+          setLoading(false);
+        }
+        return;
+      }
+
+      try {
+        setLoading(true);
+        setError('');
+        const res = await fetch(`${API}/watchlist/user/${user._id}`);
+        if (!res.ok) throw new Error('Failed to load watchlist');
+        const data = await res.json();
+        if (!active) return;
+
+        const normalized = (Array.isArray(data) ? data : [])
+          .map(normalizeEntry)
+          .filter(Boolean);
+
+        setList(normalized);
+      } catch (err) {
+        if (active) {
+          setList([]);
+          setError(err.message || 'Failed to load watchlist');
+        }
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+
+    loadWatchlist();
+    return () => {
+      active = false;
+    };
+  }, [user?._id]);
+
+  const updateStatus = async (id, status) => {
+    try {
+      const res = await fetch(`${API}/watchlist/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!res.ok) throw new Error('Failed to update watchlist item');
+      const updated = normalizeEntry(await res.json());
+      if (!updated) throw new Error('Invalid watchlist item');
+
+      setList(prev => prev.map(entry => (entry._id === id ? updated : entry)));
+    } catch (err) {
+      setError(err.message || 'Failed to update watchlist item');
+    }
+  };
+
+  const removeEntry = async id => {
+    try {
+      const res = await fetch(`${API}/watchlist/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to remove watchlist item');
+      setList(prev => prev.filter(entry => entry._id !== id));
+    } catch (err) {
+      setError(err.message || 'Failed to remove watchlist item');
+    }
+  };
+
+  const filtered = useMemo(
+    () => (filter ? list.filter(entry => entry.status === filter) : list),
+    [filter, list],
+  );
+  const counts = useMemo(
+    () => STATUSES.reduce((acc, status) => ({ ...acc, [status]: list.filter(entry => entry.status === status).length }), {}),
+    [list],
+  );
 
   return (
     <div className="page-enter pageContainerMedium">
@@ -49,7 +145,11 @@ export default function WatchlistPage() {
         ))}
       </div>
 
-      {filtered.length === 0 ? (
+      {loading ? (
+        <div className="catalogStateMessage">Loading watchlist...</div>
+      ) : error ? (
+        <div className="catalogStateMessage catalogStateError">{error}</div>
+      ) : filtered.length === 0 ? (
         <div className="watchlistEmptyState">
           <div className="watchlistEmptyIcon">📋</div>
           <p className="watchlistEmptyText">{filter ? `Nothing with status "${filter}" yet.` : 'Your watchlist is empty.'}</p>

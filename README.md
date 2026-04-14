@@ -54,7 +54,7 @@ npm install
 
 Start the server:
 
-```
+```i
 node server.js
 ```
 
